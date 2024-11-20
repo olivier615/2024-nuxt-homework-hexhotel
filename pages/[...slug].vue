@@ -13,9 +13,8 @@ if (event) {
 
 <template>
   <div class="not-found">
-    <h1>404 - 找不到頁面</h1>
-    <p>抱歉，您所尋找的 {{ page }} 頁面不存在。</p>
-    <!-- 返回首頁的連結 -->
+    <h2 class="text-danger">404 - 找不到頁面</h2>
+    <p>您所尋找的頁面不存在</p>
     <button type="button" class="btn btn-primary" @click="router.push('/')">
       返回首頁
     </button>

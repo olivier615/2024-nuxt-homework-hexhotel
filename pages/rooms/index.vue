@@ -8,6 +8,10 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
+// definePageMeta({
+//   name: 'rooms',
+// })
+
 const modules = ref([Autoplay, Navigation, Pagination]);
 
 const importImage = (url) => {
@@ -166,7 +170,12 @@ const roomImages = computed(() => {
                   >
                     <p class="mb-0 fw-bold">NT$ 10,000</p>
                     <NuxtLink
-                      to="/rooms/a"
+                    :to="{
+                        name: 'room-detail',
+                        params: {
+                          room: 'a',
+                        },
+                      }"
                       class="icon-link icon-link-hover text-primary-100"
                     >
                       <Icon class="bi fs-5" icon="mdi:arrow-right" />

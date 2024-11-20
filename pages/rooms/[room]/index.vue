@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
 
+definePageMeta({
+  name: 'room-detail',
+})
+
 const datePickerModal = useTemplateRef('datePickerModal')
 function openModal() {
   datePickerModal.value?.openModal()
