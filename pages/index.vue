@@ -1,14 +1,12 @@
 <script setup>
 import { Icon } from "@iconify/vue";
-
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { indexApi } from "~/apis/indexApi";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-
-const config = useRuntimeConfig(); // 取用 nuxt.config.ts 的環境變數
 
 definePageMeta({
   layout: "default",
@@ -27,19 +25,9 @@ const slideNext = () => {
 };
 const newsList = ref([]);
 const culinaryList = ref([]);
-const apiUrl = config.public.apiUrl
 
-const { data } = await useAsyncData("index-info", async () => {
-  const apis = [
-    $fetch(`${apiUrl}/v1/home/news/`).catch(() => ({ result: [] })),
-    $fetch(`${apiUrl}/v1/home/culinary/`).catch(() => ({ result: [] })),
-    ,
-  ];
-  const allResult = await Promise.allSettled(apis);
-  return allResult;
-});
-newsList.value = data.value[0].value.result;
-culinaryList.value = data.value[1].value.result;
+newsList.value = await indexApi.getNewsList() || [];
+culinaryList.value = await indexApi.getCulinaryList() || [];
 </script>
 
 <template>
