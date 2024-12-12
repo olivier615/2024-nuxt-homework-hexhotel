@@ -1,6 +1,4 @@
 <script setup>
-import { ref } from 'vue';
-
 const isEditPassword = ref(false);
 const isEditProfile = ref(false);
 </script>

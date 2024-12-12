@@ -1,7 +1,42 @@
 <script setup>
 import { Icon } from "@iconify/vue";
-// import 'bootstrap/js/dist/collapse';
-// import 'bootstrap/js/dist/dropdown';
+import { accountApi } from "~/apis/account";
+const { $showAlert } = useNuxtApp();
+const userStore = useUserStore();
+const getUserCookie = useCookie("auth");
+const token = ref(getUserCookie.value);
+const router = useRouter();
+const userName = ref('')
+const loginStatus = ref(false)
+
+const getUserInfo = async () => {
+  if (token.value !== undefined) {
+    const userData = await accountApi.getUserData(token.value);
+    userStore.setUserData(userData.result);
+    console.log(userStore.userData)
+    userName.value = userStore.userData.name
+    loginStatus.value = true
+  }
+};
+
+watch(
+  () => userStore.userData.name,
+  (newName, oldName) => {
+    userName.value = newName
+  }
+);
+
+const handelLogOut = () => {
+  accountApi.logOut();
+  userStore.deleteUserData();
+  $showAlert({
+    title: "登出",
+    icon: "info",
+    text: "您已登出",
+  });
+  loginStatus.value = false
+  router.push("/");
+};
 
 const route = useRoute();
 const transparentBgRoute = ["home", "rooms"];
@@ -18,6 +53,7 @@ const handleScroll = () => {
 
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
+  getUserInfo();
 });
 
 onUnmounted(() => {
@@ -70,29 +106,53 @@ onUnmounted(() => {
                   data-bs-toggle="dropdown"
                 >
                   <Icon class="fs-5" icon="mdi:account-circle-outline" />
-                  Jessica
+                  {{ userName || "未登入" }}
                 </button>
                 <ul
                   class="dropdown-menu py-3 overflow-hidden"
                   style="right: 0; left: auto; border-radius: 20px"
                 >
                   <li>
-                    <NuxtLink class="dropdown-item px-6 py-4" to="/user/a/profile">我的帳戶</NuxtLink>
+                    <NuxtLink
+                      class="dropdown-item px-6 py-4"
+                      :to='`/user/${userStore.userData._id}/profile`'
+                      >我的帳戶</NuxtLink
+                    >
                   </li>
                   <li>
                     <NuxtLink
+                      v-if="!loginStatus"
                       class="dropdown-item px-6 py-4"
                       to="/account/login"
-                      >登出</NuxtLink
                     >
+                      登入
+                    </NuxtLink>
+                    <button
+                      v-else
+                      class="dropdown-item px-6 py-4"
+                      @click="handelLogOut"
+                    >
+                      登出
+                    </button>
                   </li>
                 </ul>
               </div>
             </li>
             <li class="d-md-none nav-item">
-              <NuxtLink to="/" class="nav-link p-4 text-neutral-0">
+              <NuxtLink
+                to="/account/login"
+                class="nav-link p-4 text-neutral-0"
+                v-if="!loginStatus"
+              >
                 會員登入
               </NuxtLink>
+              <button
+                class="nav-link p-4 text-neutral-0"
+                v-else
+                @click="handelLogOut"
+              >
+                會員登出
+              </button>
             </li>
             <li class="nav-item">
               <NuxtLink

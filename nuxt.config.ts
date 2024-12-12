@@ -3,7 +3,19 @@ export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
   css: ["@/assets/styles/all.scss"],
-  modules: ["@vee-validate/nuxt"],
+  imports: {
+    dirs: ["stores"],
+  },
+
+  modules: [
+    "@vee-validate/nuxt",
+    [
+      "@pinia/nuxt",
+      {
+        autoImports: ["defineStore", "acceptHMRUpdate"],
+      },
+    ],
+  ],
   veeValidate: {
     // 修改 VeeValidate 元件的名稱
     componentNames: {

@@ -1,4 +1,6 @@
 <script setup>
+const userStore = useUserStore();
+const { userData, setUserData } = userStore
 </script>
 
 <template>
@@ -24,7 +26,7 @@
             alt="avatar"
           >
           <h1 class="text-neutral-0 fw-bold">
-            Hello，Jessica
+            Hello，{{ userData.name }}
           </h1>
         </div>
       </div>

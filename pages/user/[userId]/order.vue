@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
 
-definePageMeta({
-  name: 'user-order',
-})
+
+// definePageMeta({
+//   name: 'user-order',
+// })
 
 const roomId = 'a' // for navigation demo
 </script>

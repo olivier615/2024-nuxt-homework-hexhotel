@@ -13,8 +13,8 @@ export default defineNuxtPlugin((nuxtApp) => {
     if (!value) {
       return "密碼為必填項"; // 自定義錯誤訊息（可用 zhTW.json 定義）
     }
-    if (value.length < 6) {
-      return "密碼最少需要 6 個字符";
+    if (value.length < 8) {
+      return "密碼最少需要 8 個字符";
     }
     const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/;
     if (!regex.test(value)) {

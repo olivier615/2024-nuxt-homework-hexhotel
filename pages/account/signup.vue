@@ -4,6 +4,8 @@ import { accountApi } from "~/apis/account";
 import zipCodeList from "~/assets/zipCode";
 const { $showAlert } = useNuxtApp();
 
+const route = useRoute()
+const router = useRouter()
 const isEmailAndPasswordValid = ref(false);
 const password = ref("");
 const city = ref("臺北市");
@@ -31,7 +33,7 @@ const step1OnSubmit = async (value = {}, { resetForm }) => {
   isEmailAndPasswordValid.value = true;
 };
 
-const step2OnSubmit = (value = {}, { resetForm }) => {
+const step2OnSubmit = async (value = {}, { resetForm }) => {
   if (!agreement.value) {
     $showAlert({
       title: "請勾選同意本網站個資使用規範",
@@ -52,7 +54,15 @@ const step2OnSubmit = (value = {}, { resetForm }) => {
       detail: value.address,
     },
   };
-  accountApi.createNewAccount(signupData)
+  const response = await accountApi.createNewAccount(signupData)
+  if (response.status) {
+    $showAlert({
+        title: "註冊成功",
+        icon: "success",
+        text: '您已完成註冊，即將回到首頁',
+      });
+    router.push("/")
+  }
 };
 
 const accountData = ref({

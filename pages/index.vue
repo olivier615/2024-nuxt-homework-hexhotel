@@ -10,6 +10,7 @@ import "swiper/css/pagination";
 
 definePageMeta({
   layout: "default",
+  // middleware: "auth",
 });
 
 const modules = ref([Autoplay, Navigation, Pagination]);

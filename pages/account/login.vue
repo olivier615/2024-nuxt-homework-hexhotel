@@ -1,7 +1,59 @@
 <script setup>
+import { accountApi } from "~/apis/account";
+const { userLogin } = accountApi
+const router = useRouter()
+const { $showAlert } = useNuxtApp();
+const store = useUserStore()
+const rememberEmail = ref(false)
+
 definePageMeta({
   name: 'login',
 })
+const loginData = ref({
+  email: '',
+  password: ''
+})
+
+const handelUserLogin = async () => {
+  const result = await userLogin(loginData.value)
+  if (result) {
+    $showAlert({
+      title: "登入成功",
+      icon: "success",
+      text: "",
+    });
+    checkRememberEmail()
+    router.push("/")
+  } else {
+    $showAlert({
+      title: "信箱或密碼錯誤",
+      icon: "info",
+      text: "",
+    });
+    return
+  }
+}
+
+const checkRememberEmail = () => {
+  if (rememberEmail.value) {
+    const cookie = useCookie('rememberEmail', {
+      path: '/',
+    })
+    cookie.value = loginData.value.email;
+  } else if (!rememberEmail.value) {
+    const cookie =  useCookie('rememberEmail')
+    cookie.value = null
+  }
+}
+
+onMounted(() => {
+  const cookie = useCookie('rememberEmail')
+  if (cookie.value) {
+    loginData.value.email = cookie.value
+    rememberEmail.value = true
+  }
+})
+
 </script>
 
 <template>
@@ -15,7 +67,7 @@ definePageMeta({
       </h1>
     </div>
 
-    <form class="mb-10">
+    <form class="mb-10" @submit.prevent="handelUserLogin">
       <div class="mb-4 fs-8 fs-md-7">
         <label
           class="mb-2 text-neutral-0 fw-bold"
@@ -26,9 +78,9 @@ definePageMeta({
         <input
           id="email"
           class="form-control p-4 text-neutral-100 fw-medium border-neutral-40"
-          value="jessica@sample.com"
           placeholder="請輸入信箱"
           type="email"
+          v-model="loginData.email"
         >
       </div>
       <div class="mb-4 fs-8 fs-md-7">
@@ -41,9 +93,9 @@ definePageMeta({
         <input
           id="password"
           class="form-control p-4 text-neutral-100 fw-medium border-neutral-40"
-          value="jessica@sample.com"
           placeholder="請輸入密碼"
           type="password"
+          v-model="loginData.password"
         >
       </div>
       <div class="d-flex justify-content-between align-items-center mb-10 fs-8 fs-md-7">
@@ -52,7 +104,7 @@ definePageMeta({
             id="remember"
             class="form-check-input"
             type="checkbox"
-            value=""
+            v-model="rememberEmail"
           >
           <label
             class="form-check-label fw-bold"
@@ -70,7 +122,7 @@ definePageMeta({
       </div>
       <button
         class="btn btn-primary-100 w-100 py-4 text-neutral-0 fw-bold"
-        type="button"
+        type="submit"
       >
         會員登入
       </button>
