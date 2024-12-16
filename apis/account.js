@@ -39,12 +39,12 @@ const createNewAccount = async (signupData) => {
     });
     if (response.status) {
       saveToken(response.token);
-      result = response
+      result = response;
     } else {
       $showAlert({
         title: "註冊失敗",
         icon: "info",
-        text: '請重新嘗試註冊',
+        text: "請重新嘗試註冊",
       });
     }
   } catch (error) {
@@ -89,14 +89,14 @@ const userLogin = async ({ email, password }) => {
     });
     if (response.status) {
       saveToken(response.token);
-      return response.status
+      return response.status;
     } else {
       $showAlert({
         title: "登入失敗",
         icon: "info",
-        text: '請重新嘗試登入',
+        text: "請重新嘗試登入",
       });
-      return false
+      return false;
     }
   } catch (error) {
     console.error(error);
@@ -116,14 +116,42 @@ const getUserData = async (token) => {
     });
     return response;
   } catch (error) {
-    // console.error(error);
+    console.error(error);
   }
-}
+};
 
 const logOut = () => {
-  const cookie = useCookie("auth")
-  cookie.value = null
-}
+  const cookie = useCookie("auth");
+  cookie.value = null;
+};
+
+const changeUserData = async (newData, token) => {
+  const { $apiConfig } = useNuxtApp();
+  const apiUrl = $apiConfig.apiUrl;
+  try {
+    const { data, error } = await useFetch("/api/v1/user", {
+      method: "PUT",
+      baseURL: apiUrl,
+      body: {
+        ...newData,
+      },
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (error.value) {
+      console.error("请求错误：", error.value);
+      return null;
+    }
+
+    return data.value;
+  } catch (err) {
+    console.error("意外错误：", err.message);
+    throw err;
+  }
+};
 
 const saveToken = (token) => {
   const cookie = useCookie("auth", {
@@ -139,5 +167,6 @@ export const accountApi = {
   checkCookie,
   userLogin,
   getUserData,
-  logOut
+  logOut,
+  changeUserData,
 };

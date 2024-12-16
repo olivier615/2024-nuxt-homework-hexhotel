@@ -225,9 +225,9 @@ const accountData = ref({
               <option
                 v-for="year in 65"
                 :key="year"
-                :value=" year + 1958 "
+                :value=" year + 1947 "
               >
-                {{ year + 1958 }} 年
+                {{ year + 1947 }} 年
               </option>
             </VField>
             <VErrorMessage name="birthYear" class="invalid-feedback" />
