@@ -13,9 +13,7 @@ const getUserInfo = async () => {
   if (token.value !== undefined) {
     const userData = await accountApi.getUserData(token.value);
     userStore.setUserData(userData.result);
-    console.log(userStore.userData)
     userName.value = userStore.userData.name
-    loginStatus.value = true
   }
 };
 
