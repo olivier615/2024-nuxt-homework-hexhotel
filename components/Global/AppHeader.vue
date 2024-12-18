@@ -11,6 +11,7 @@ const loginStatus = ref(false)
 
 const getUserInfo = async () => {
   if (token.value !== undefined) {
+    loginStatus.value = true
     const userData = await accountApi.getUserData(token.value);
     userStore.setUserData(userData.result);
     userName.value = userStore.userData.name

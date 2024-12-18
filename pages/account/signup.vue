@@ -2,10 +2,12 @@
 import { Icon } from "@iconify/vue";
 import { accountApi } from "~/apis/account";
 import zipCodeList from "~/assets/zipCode";
+useSeoMeta({
+  title: "享樂酒店 | 會員註冊",
+});
 const { $showAlert } = useNuxtApp();
-
-const route = useRoute()
-const router = useRouter()
+const route = useRoute();
+const router = useRouter();
 const isEmailAndPasswordValid = ref(false);
 const password = ref("");
 const city = ref("臺北市");
@@ -42,7 +44,7 @@ const step2OnSubmit = async (value = {}, { resetForm }) => {
     });
     return;
   }
-  const { email, password } = accountData.value
+  const { email, password } = accountData.value;
   const signupData = {
     name: value.name,
     email,
@@ -54,14 +56,14 @@ const step2OnSubmit = async (value = {}, { resetForm }) => {
       detail: value.address,
     },
   };
-  const response = await accountApi.createNewAccount(signupData)
+  const response = await accountApi.createNewAccount(signupData);
   if (response.status) {
     $showAlert({
-        title: "註冊成功",
-        icon: "success",
-        text: '您已完成註冊，即將回到首頁',
-      });
-    router.push("/")
+      title: "註冊成功",
+      icon: "success",
+      text: "您已完成註冊，即將回到首頁",
+    });
+    router.push("/");
   }
 };
 
@@ -222,11 +224,7 @@ const accountData = ref({
               class="form-select p-4 text-neutral-80 fw-medium rounded-3"
               :class="{ 'is-invalid': errors['birthYear'] }"
             >
-              <option
-                v-for="year in 65"
-                :key="year"
-                :value=" year + 1947 "
-              >
+              <option v-for="year in 65" :key="year" :value="year + 1947">
                 {{ year + 1947 }} 年
               </option>
             </VField>

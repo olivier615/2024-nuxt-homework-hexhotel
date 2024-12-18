@@ -5,6 +5,10 @@ import { accountApi } from "~/apis/account";
 definePageMeta({
   name: "booking-confirmation",
 });
+
+useSeoMeta({
+  title: "享樂酒店 | 預定成功!",
+});
 const route = useRoute();
 const { bookingId } = route.params;
 
@@ -65,7 +69,7 @@ onMounted(async () => {
               立即查看您的訂單紀錄
             </h2>
             <NuxtLink
-              :to='`/user/${userStore.userData._id}/profile`'
+              :to='`/user/${userStore.userData._id}/order`'
               class="btn btn-primary-100 px-md-15 py-4 text-neutral-0 fw-bold border-0 rounded-3"
               type="button"
             >

@@ -6,6 +6,10 @@ import { orderApi } from "~/apis/order";
 
 const { $showAlert } = useNuxtApp();
 
+useSeoMeta({
+  title: "享樂酒店 | 確認訂房資訊",
+});
+
 const route = useRoute();
 const roomId = route.params.room;
 
@@ -17,7 +21,6 @@ const token = ref(getUserCookie.value);
 
 const router = useRouter();
 const orderStore = useOrderStore();
-console.log(orderStore.orderRoomInfo)
 const userStore = useUserStore();
 
 const selectCity = ref("");
@@ -64,7 +67,6 @@ const userBookingData = ref({
 });
 
 const putUserData = () => {
-  console.log(userStore.userData);
   const { name, phone, email, address } = userStore.userData;
   userBookingData.value = {
     name,
@@ -90,7 +92,6 @@ const putUserData = () => {
 };
 
 const submitBookingInfo = async (value = {}, { resetForm }) => {
-  console.log(value);
   const { address, name, phone, email, zipcode } = value;
   const orderData = {
     roomId: orderStore.orderRoomInfo.roomId,

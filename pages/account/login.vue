@@ -1,5 +1,10 @@
 <script setup>
 import { accountApi } from "~/apis/account";
+
+useSeoMeta({
+  title: "享樂酒店 | 會員登入",
+});
+
 const { userLogin } = accountApi
 const router = useRouter()
 const { $showAlert } = useNuxtApp();

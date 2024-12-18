@@ -6,6 +6,24 @@ export default defineNuxtConfig({
   imports: {
     dirs: ["stores"],
   },
+  app: {
+    head: {
+      viewport: "width=500, initial-scale=1",
+      title: "享樂酒店",
+      meta: [
+        {
+          name: "description",
+          content: "享樂酒店，位於美麗島高雄的心臟地帶，是這座城市的璀璨瑰寶與傲人地標",
+        },
+        { property: "og:title", content: "享樂酒店" },
+        { property: "og:url", content: "http://localhost:3000/" },
+        {
+          property: "og:description",
+          content: "享樂酒店，位於美麗島高雄的心臟地帶，是這座城市的璀璨瑰寶與傲人地標",
+        },
+      ],
+    },
+  },
 
   modules: [
     "@vee-validate/nuxt",

@@ -2,10 +2,16 @@
 import { accountApi } from "~/apis/account";
 import zipCodeList from "~/assets/zipCode";
 
+useSeoMeta({
+  title: "享樂酒店 | 個人資料",
+});
+
 const { $showAlert } = useNuxtApp();
 
 const isEditPassword = ref(false);
 const isEditProfile = ref(false);
+
+const route = useRoute();
 
 const getUserCookie = useCookie("auth");
 const token = ref(getUserCookie.value);

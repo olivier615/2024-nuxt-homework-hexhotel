@@ -10,7 +10,9 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-
+useSeoMeta({
+  title: "享樂酒店 | 房型選擇",
+});
 const modules = ref([Autoplay, Navigation, Pagination]);
 
 const importImage = (url) => {
@@ -38,7 +40,6 @@ const roomImages = computed(() => {
 
 const roomsList = ref([])
 roomsList.value = await roomsApi.getRoomList()
-console.log(roomsList.value)
 
 </script>
 

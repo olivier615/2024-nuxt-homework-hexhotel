@@ -1,9 +1,7 @@
 import { accountApi } from "~/apis/account";
 export default defineNuxtRouteMiddleware(async (to, from) => {
   const getUserCookie = useCookie("auth");
-  const { $showAlert } = useNuxtApp();
-  // console.log(getUserCookie.value);
-  console.log("middleware", to, from);
+  const { $showAlert } = useNuxtApp()
   const token = getUserCookie.value
   const checkResult = await accountApi.checkCookie(token);
   if (!checkResult) {

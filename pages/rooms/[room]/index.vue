@@ -2,7 +2,7 @@
 import { Icon } from "@iconify/vue";
 import { roomsApi } from "~/apis/rooms";
 const route = useRoute();
-const router = useRouter()
+const router = useRouter();
 const orderStore = useOrderStore();
 definePageMeta({
   name: "room-detail",
@@ -53,18 +53,22 @@ const handelBookingRoomInfo = () => {
     checkOutDate: bookingDate.date.end,
     peopleNum: bookingPeople.value,
     roomId,
-    daysCount: daysCount.value
-  }
-  orderStore.setOrderRoomInfo(roomData)
+    daysCount: daysCount.value,
+  };
+  orderStore.setOrderRoomInfo(roomData);
   router.push(`/rooms/${roomId}/booking`);
-}
+};
 
 const roomInfo = ref({});
 const roomId = route.params.room;
 roomInfo.value = await roomsApi.getRoomDetail(roomId);
+const title = computed(() => roomInfo.value.name);
 </script>
 
 <template>
+  <Head>
+    <Title>享樂酒店 | {{ title }}</Title>
+  </Head>
   <main class="mt-18 mt-md-30 bg-neutral-100">
     <section class="p-md-20 bg-primary-10">
       <div class="d-none d-md-block position-relative">
@@ -404,7 +408,9 @@ roomInfo.value = await roomsApi.getRoomDetail(roomId);
 
               <template v-else>
                 <div class="d-flex flex-column gap-1"></div>
-                <button type="button" @click="handelBookingRoomInfo"
+                <button
+                  type="button"
+                  @click="handelBookingRoomInfo"
                   class="btn btn-primary-100 px-12 py-4 text-neutral-0 fw-bold rounded-3"
                 >
                   立即預訂
@@ -443,7 +449,8 @@ roomInfo.value = await roomsApi.getRoomDetail(roomId);
             >
           </div>
           <button
-            type="button" @click="handelBookingRoomInfo"
+            type="button"
+            @click="handelBookingRoomInfo"
             class="btn btn-primary-100 px-12 py-4 text-neutral-0 fw-bold rounded-3"
           >
             立即預訂

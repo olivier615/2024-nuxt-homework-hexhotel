@@ -37,7 +37,7 @@ const { userData, setUserData } = userStore
         <ul class="nav mb-10 mb-md-20 fw-bold">
           <li class="nav-item position-relative">
             <NuxtLink
-              to="/user/a/profile"
+              :to="`/user/${userData._id}/profile`"
               exact-active-class="text-primary-100"
               class="nav-link px-6 py-4 text-white"
             >
@@ -46,7 +46,7 @@ const { userData, setUserData } = userStore
           </li>
           <li class="nav-item position-relative">
             <NuxtLink
-              to="/user/a/order"
+              :to="`/user/${userData._id}/order`"
               exact-active-class="text-primary-100"
               class="nav-link px-6 py-4 text-white"
             >
