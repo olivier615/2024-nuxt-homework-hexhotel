@@ -20,6 +20,7 @@ const orderResult = await orderApi.getOrderList(
   getUserCookie.value
 );
 orderList.value = orderResult.result;
+console.log(orderList.value.length)
 shortList.value = [
 orderList.value[0],
 orderList.value[1],
@@ -34,7 +35,6 @@ watch(showFullList, (newOption) => {
     historyList.value = shortList.value
   }
 });
-
 const lastOrder = ref(orderList.value[orderList.value.length - 1]);
 
 const daysCount = (checkInDate, checkOutDate) => {
@@ -53,16 +53,13 @@ const handelCancelOrder = async (id, token) => {
   }
 };
 
-// definePageMeta({
-//   name: 'user-order',
-// })
-
 </script>
 
 <template>
   <div class="row gap-6 gap-md-0">
     <div class="col-12 col-md-7">
-      <div
+      <p class="text-light" v-if="orderList.length < 1">目前尚無訂單資料</p>
+      <div v-else
         class="rounded-3xl d-flex flex-column gap-6 gap-md-10 p-4 p-md-10 bg-neutral-0"
         style="max-width: 730px"
       >
@@ -187,7 +184,8 @@ const handelCancelOrder = async (id, token) => {
       </div>
     </div>
     <div class="col-12 col-md-5">
-      <div
+      <p class="text-light" v-if="orderList.length <= 1">目前尚無歷史訂單</p>
+      <div v-else
         class="rounded-3xl d-flex flex-column gap-6 gap-md-10 p-4 p-md-10 bg-neutral-0"
       >
         <h2 class="mb-0 text-neutral-100 fs-7 fs-md-5 fw-bold">歷史訂單</h2>
