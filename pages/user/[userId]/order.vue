@@ -20,7 +20,6 @@ const orderResult = await orderApi.getOrderList(
   getUserCookie.value
 );
 orderList.value = orderResult.result;
-console.log(orderList.value.length)
 shortList.value = [
 orderList.value[0],
 orderList.value[1],

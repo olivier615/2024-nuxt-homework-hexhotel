@@ -46,7 +46,7 @@ export default defineNuxtConfig({
     token: "1234567890",
     // 不公開的敏感訊息
     public: {
-      apiUrl: "https://hex-hotel.onrender.com",
+      apiUrl: "https://nuxr3.zeabur.app",
       // PI URL 等環境差異有關的變數放 public
     },
   },
